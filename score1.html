@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Marketing MCQ Quiz Leaderboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('https://via.placeholder.com/1920x1080'); /* Replace with your background image URL */
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .leaderboard {
+            background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white background */
+            border: 2px solid #333; /* Dark border */
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.4); /* Slight box shadow */
+            max-width: 400px;
+        }
+
+        .leaderboard h2 {
+            margin: 0 0 20px;
+            color: #333;
+        }
+
+        .leaderboard ol {
+            list-style: none;
+            padding: 0;
+        }
+
+        .leaderboard li {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: rgba(200, 200, 200, 0.7); /* Semi-transparent gray background */
+            border: 2px solid #666; /* Darker border */
+            border-radius: 5px;
+            transition: background-color 0.3s, transform 0.2s;
+            cursor: pointer;
+        }
+
+        .leaderboard li:hover {
+            background-color: rgba(170, 170, 170, 0.7); /* Darker gray on hover */
+            transform: scale(1.02);
+        }
+
+        .leaderboard li span {
+            font-size: 18px;
+            color: #333;
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        .leaderboard li span:first-child {
+            font-weight: bold;
+            background-color: #ffbe42;
+        }
+
+        .leaderboard li span:nth-child(2) {
+            background-color: #9cc4e4;
+        }
+    </style>
+</head>
+<body>
+    <div class="leaderboard" id="leaderboard">
+        <h2>Leaderboard</h2>
+        <ol id="scores">
+            <!-- Leaderboard scores will be dynamically added here -->
+        </ol>
+    </div>
+
+    <script>
+        // Sample participant scores (you can replace with real scores)
+        const scores = [
+            { name: "hansika", score: 15 },
+            { name: "sumiya", score: 18 },
+            { name: "pavan", score: 13 },
+            { name: "susmitha", score: 20 },
+            { name: "nikhila", score: 16 }
+        ];
+
+        // Sort scores in descending order
+        scores.sort((a, b) => b.score - a.score);
+
+        // Limit the scores to a maximum of 20 points
+        scores.forEach((participant) => {
+            participant.score = Math.min(participant.score, 20);
+        });
+
+        // Display scores in the leaderboard
+        const leaderboard = document.getElementById("leaderboard");
+        const scoresList = document.getElementById("scores");
+
+        scores.forEach((participant, index) => {
+            const li = document.createElement("li");
+            li.innerHTML = `<span>${index + 1}. ${participant.name}</span><span>${participant.score} points</span>`;
+            scoresList.appendChild(li);
+        });
+    </script>
+</body>
+</html>

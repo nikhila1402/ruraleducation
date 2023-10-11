@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Agriculture Quiz Game with Blockchain</title>
+    <style>
+        /* Add your CSS styles here */
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            color: #3498db;
+        }
+
+        .quiz-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .question {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .options button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .options button:hover {
+            background-color: #2980b9;
+        }
+
+        .score {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 20px;
+            color: #333;
+        }
+
+        .blockchain {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .blockchain h2 {
+            font-size: 20px;
+            color: #333;
+        }
+
+        .blockchain ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .blockchain li {
+            font-size: 16px;
+            margin: 5px 0;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <h1>Agriculture Quiz Game with Blockchain</h1>
+    <div class="quiz-container">
+        <div class="question" id="question">Question goes here</div>
+        <div class="options" id="options">
+            <!-- Options will be added here dynamically -->
+        </div>
+        <div class="score" id="score">Score: 0</div>
+        <button onclick="nextQuestion()" id="nextButton" style="display: none;">Next</button>
+    </div>
+
+    <div class="blockchain">
+        <h2>Blockchain Ledger</h2>
+        <ul id="blockchainLedger">
+            <!-- Blockchain ledger entries will be added here -->
+        </ul>
+    </div>
+
+    <script>
+        // Define an array of questions, options, and answers here
+        const questions = [
+            {
+                question: "Question 1: What is the capital of France?",
+                options: ["Berlin", "Madrid", "Paris", "Rome"],
+                answer: "Paris"
+            },
+            {
+                question: "Question 2: What is the largest planet in our solar system?",
+                options: ["Earth", "Jupiter", "Mars", "Venus"],
+                answer: "Jupiter"
+            },
+            {
+                question: "Question 3: What gas do plants absorb from the atmosphere during photosynthesis?",
+                options: ["Carbon Dioxide", "Oxygen", "Nitrogen", "Hydrogen"],
+                answer: "Carbon Dioxide"
+            },
+            {
+                question: "Question 4: What is the primary nutrient in fertilizer?",
+                options: ["Phosphorus", "Potassium", "Nitrogen", "Calcium"],
+                answer: "Nitrogen"
+            },
+            {
+                question: "Question 5: What is the process of soil preparation before planting called?",
+                options: ["Sowing", "Irrigation", "Tillage", "Pruning"],
+                answer: "Tillage"
+            },
+            {
+                question: "Question 6: Which of the following is a common cereal crop?",
+                options: ["Potato", "Tomato", "Wheat", "Carrot"],
+                answer: "Wheat"
+            },
+            {
+                question: "Question 7: What is the term for the removal of weeds from a crop field?",
+                options: ["Irrigation", "Fertilization", "Weeding", "Harvesting"],
+                answer: "Weeding"
+            },
+            {
+                question: "Question 8: Which gas is essential for photosynthesis in plants?",
+                options: ["Oxygen", "Carbon Dioxide", "Nitrogen", "Hydrogen"],
+                answer: "Carbon Dioxide"
+            },
+            {
+                question: "Question 9: What is the process of harvesting mature crops called?",
+                options: ["Sowing", "Tillage", "Weeding", "Harvesting"],
+                answer: "Harvesting"
+            },
+            {
+                question: "Question 10: What is the primary purpose of irrigation in agriculture?",
+                options: ["Weeding", "Tillage", "Fertilization", "Providing water"],
+                answer: "Providing water"
+            },
+            {
+                question: "Question 11: What is the term for the practice of breeding and raising fish in controlled environments?",
+                options: ["Horticulture", "Aquaculture", "Apiculture", "Sericulture"],
+                answer: "Aquaculture"
+            },
+            {
+                question: "Question 12: Which of the following is a common method of organic pest control in farming?",
+                options: ["Genetic modification", "Pesticides", "Crop rotation", "Irrigation"],
+                answer: "Crop rotation"
+            },
+            {
+                question: "Question 13: What is the term for the process of collecting and storing rainwater for later use in agriculture?",
+                options: ["Drip irrigation", "Rainwater harvesting", "Flood irrigation", "Sprinkler irrigation"],
+                answer: "Rainwater harvesting"
+            },
+            {
+                question: "Question 14: Which of the following is a common practice to improve soil fertility?",
+                options: ["Deforestation", "Monoculture farming", "Crop rotation", "Overgrazing"],
+                answer: "Crop rotation"
+            },
+            {
+                question: "Question 15: What is the term for the controlled breeding of plants to produce desired traits?",
+                options: ["Aquaculture", "Sericulture", "Horticulture", "Genetic modification"],
+                answer: "Horticulture"
+            },
+            {
+                question: "Question 16: What is the primary source of energy for photosynthesis in plants?",
+                options: ["Sunlight", "Wind", "Geothermal heat", "Electricity"],
+                answer: "Sunlight"
+            },
+            {
+                question: "Question 17: What is the term for the practice of raising bees for honey production?",
+                options: ["Apiculture", "Aquaculture", "Sericulture", "Horticulture"],
+                answer: "Apiculture"
+            },
+            {
+                question: "Question 18: Which of the following is a common method of soil conservation?",
+                options: ["Deforestation", "Overgrazing", "Terracing", "Monoculture farming"],
+                answer: "Terracing"
+            },
+            {
+                question: "Question 19: What is the term for the process of silk production from silkworms?",
+                options: ["Horticulture", "Aquaculture", "Sericulture", "Apiculture"],
+                answer: "Sericulture"
+            },
+            {
+                question: "Question 20: Which nutrient is often associated with the growth of strong plant roots?",
+                options: ["Phosphorus", "Potassium", "Nitrogen", "Calcium"],
+                answer: "Calcium"
+            }
+        ];
+    </script>
+    <script>
+        let currentQuestion = 0;
+        let score = 0;
+
+        const blockchainLedger = [];
+
+        function addToBlockchain(answer) {
+            const block = {
+                question: questions[currentQuestion].question,
+                answer: answer,
+            };
+            blockchainLedger.push(block);
+        }
+
+        function displayBlockchain() {
+            const blockchainLedgerElement = document.getElementById('blockchainLedger');
+            blockchainLedgerElement.innerHTML = '';
+            blockchainLedger.forEach((block, index) => {
+                const listItem = document.createElement('li');
+                listItem.textContent = `Block ${index + 1}: Question: "${block.question}" - Answer: "${block.answer}"`;
+                blockchainLedgerElement.appendChild(listItem);
+            });
+        }
+
+        function checkAnswer(event) {
+            const selectedAnswer = event.target.textContent;
+            const correctAnswer = questions[currentQuestion].answer;
+
+            addToBlockchain(selectedAnswer);
+
+            if (selectedAnswer === correctAnswer) {
+                score++;
+            }
+
+            const scoreElement = document.getElementById('score');
+            scoreElement.textContent = `Score: ${score}`;
+
+            currentQuestion++;
+
+            const nextButton = document.getElementById('nextButton');
+            nextButton.style.display = 'block';
+
+            if (currentQuestion < questions.length) {
+                displayQuestion();
+            } else {
+                endGame();
+            }
+
+            displayBlockchain();
+        }
+
+        function nextQuestion() {
+            displayQuestion();
+        }
+
+        function displayQuestion() {
+            const questionElement = document.getElementById('question');
+            const optionsElement = document.getElementById('options');
+            const nextButton = document.getElementById('nextButton');
+
+            questionElement.textContent = questions[currentQuestion].question;
+
+            optionsElement.innerHTML = '';
+            for (const option of questions[currentQuestion].options) {
+                const button = document.createElement('button');
+                button.textContent = option;
+                button.addEventListener('click', checkAnswer);
+                optionsElement.appendChild(button);
+            }
+
+            nextButton.style.display = 'none';
+        }
+
+        function endGame() {
+            const questionElement = document.getElementById('question');
+            const optionsElement = document.getElementById('options');
+            const nextButton = document.getElementById('nextButton');
+
+            questionElement.textContent = 'Quiz Completed!';
+            optionsElement.innerHTML = '';
+            nextButton.style.display = 'none';
+        }
+        displayQuestion();
+    </script>
+</body>
+</html>
